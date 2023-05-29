@@ -1,26 +1,12 @@
-﻿// file:	VtlSoftware.Logging\LogMethodAttribute.cs
-//
-// summary:	Implements the log method attribute class
-
-using Metalama.Extensions.DependencyInjection;
+﻿using Metalama.Extensions.DependencyInjection;
 using Metalama.Framework.Aspects;
 using Metalama.Framework.Code;
 using Metalama.Framework.Eligibility;
+using System.Diagnostics;
 
 namespace VtlSoftware.Logging
 {
-    ///---- LogMethodAttribute   (Class) ----
-    ///
-    /// <summary>
-    /// An attribute for applying logging to Methods.
-    /// </summary>
-    ///
-    /// <remarks></remarks>
-    ///
-    /// <seealso cref="T:OverrideMethodAspect"/>
-    ///-------------------------------------------------------------------------------------------------
-    #pragma warning disable CS8618
-    public class LogMethodAttribute : OverrideMethodAspect
+    public class TimedLogMethodAttribute : OverrideMethodAspect
     {
         #region Fields
         /// <summary>
@@ -48,7 +34,7 @@ namespace VtlSoftware.Logging
         public override void BuildAspect(IAspectBuilder<IMethod> builder)
         {
             if(!(builder.Target.Attributes.OfAttributeType(typeof(NoLogAttribute)).Any() ||
-                builder.Target.Attributes.OfAttributeType(typeof(TimedLogMethodAttribute)).Any()))
+                builder.Target.Attributes.OfAttributeType(typeof(LogMethodAttribute)).Any()))
             {
                 builder.Advice.Override(builder.Target, nameof(this.OverrideMethod));
             }
@@ -121,6 +107,8 @@ namespace VtlSoftware.Logging
                     logger.LogInformation($"Entering {methodName} with these parameters: {parameters}");
                 }
             }
+
+            Stopwatch watch = Stopwatch.StartNew();
             try
             {
                 var result = meta.Proceed();
@@ -148,6 +136,10 @@ namespace VtlSoftware.Logging
             {
                 logger.LogError($"An error has occured in {methodName}. These are the details: {e}");
                 throw;
+            } finally
+            {
+                watch.Stop();
+                logger.LogInformation($"{methodName} took {watch.ElapsedMilliseconds} ms to complete.");
             }
         }
 

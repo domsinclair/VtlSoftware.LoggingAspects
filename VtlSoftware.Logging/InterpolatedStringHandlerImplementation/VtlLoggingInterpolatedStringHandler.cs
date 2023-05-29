@@ -1,10 +1,7 @@
 ﻿
-///----------------------------
-///
 // file:	VtlSoftware.Logging\VtlLoggingInterpolatedStringHandler.cs
 //
 // summary:	Implements the vtl logging interpolated string handler class
-///-------------------------------------------------------------------------------------------------
 
 using System.Runtime.CompilerServices;
 
@@ -69,15 +66,17 @@ namespace VtlSoftware.Logging
         #endregion
 
         #region Public Methods
-        ///---- AppendFormatted<T>   (Method) ----
+        ///---- AppendFormatted (of T)   (Method) ----
         ///
-        /// <summary>   Appends a value to the final formatted string output. </summary>
+        /// <summary>
+        /// Appends a value to the final formatted string output.
+        /// </summary>
         ///
-        /// <remarks>    </remarks>
+        /// <remarks></remarks>
         ///
-        /// <typeparam name="T">    Generic type parameter. </typeparam>
-        /// <param name="value">    The value. </param>
-        /// <param name="name">     (Optional) The name. </param>
+        /// <typeparam name="T">Generic type parameter.</typeparam>
+        /// <param name="value">The value.</param>
+        /// <param name="name">(Optional) The name.</param>
         ///-------------------------------------------------------------------------------------------------
 
         public void AppendFormatted<T>(T value, [CallerArgumentExpression("value")] string name = "")
