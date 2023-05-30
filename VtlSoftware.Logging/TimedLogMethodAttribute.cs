@@ -1,4 +1,11 @@
-﻿using Metalama.Extensions.DependencyInjection;
+﻿// <copyright file="TimedLogMethodAttribute.cs" company="View To Learn / Vtl Software Ltd">
+// Copyright (c) 2023 View To Learn / Vtl Software Ltd. All rights reserved.
+// </copyright>
+// <author> Dom Sinclair </author>
+// <date> 30 May 2023 </date>
+// <summary> Implements the timed log method attribute class </summary>
+
+using Metalama.Extensions.DependencyInjection;
 using Metalama.Framework.Aspects;
 using Metalama.Framework.Code;
 using Metalama.Framework.Eligibility;
@@ -6,6 +13,14 @@ using System.Diagnostics;
 
 namespace VtlSoftware.Logging
 {
+    /// <summary>
+    /// An attribute that will add logging and timing to a Method.
+    /// </summary>
+    ///
+    /// <remarks></remarks>
+    ///
+    /// <seealso cref="T:OverrideMethodAspect"/>
+
     public class TimedLogMethodAttribute : OverrideMethodAspect
     {
         #region Fields
@@ -18,8 +33,6 @@ namespace VtlSoftware.Logging
         #endregion
 
         #region Public Methods
-        ///---- BuildAspect   (Method) ----
-        ///
         /// <summary>
         /// Builds an aspect.
         /// </summary>
@@ -29,7 +42,6 @@ namespace VtlSoftware.Logging
         /// <param name="builder">The builder.</param>
         ///
         /// <seealso cref="M:Metalama.Framework.Aspects.OverrideMethodAspect.BuildAspect(IAspectBuilder{IMethod})"/>
-        ///-------------------------------------------------------------------------------------------------
 
         public override void BuildAspect(IAspectBuilder<IMethod> builder)
         {
@@ -40,10 +52,8 @@ namespace VtlSoftware.Logging
             }
         }
 
-        ///---- BuildEligibility   (Method) ----
-        ///
         /// <summary>
-        /// Builds an eligibility.
+        /// Builds the eligibility criteria for this particular aspect.
         /// </summary>
         ///
         /// <remarks></remarks>
@@ -51,22 +61,18 @@ namespace VtlSoftware.Logging
         /// <param name="builder">The builder.</param>
         ///
         /// <seealso cref="M:Metalama.Framework.Aspects.MethodAspect.BuildEligibility(IEligibilityBuilder{IMethod})"/>
-        ///-------------------------------------------------------------------------------------------------
 
         public override void BuildEligibility(IEligibilityBuilder<IMethod> builder) { base.BuildEligibility(builder); }
 
-        ///---- OverrideMethod   (Method) ----
-        ///
         /// <summary>
         /// Default template of the new method implementation.
         /// </summary>
         ///
         /// <remarks></remarks>
         ///
-        /// <returns>A dynamic?</returns>
+        /// <returns>A dynamic object that will be resolved at runtime.</returns>
         ///
         /// <seealso cref="M:Metalama.Framework.Aspects.OverrideMethodAspect.OverrideMethod()"/>
-        ///-------------------------------------------------------------------------------------------------
 
         public override dynamic? OverrideMethod()
         {

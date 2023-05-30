@@ -1,6 +1,9 @@
-﻿// file:	VtlSoftware.Logging\LogPropertyAttribute.cs
-//
-// summary:	Implements the log property attribute class
+﻿// <copyright file="LogPropertyAttribute.cs" company="View To Learn / Vtl Software Ltd">
+// Copyright (c) 2023 View To Learn / Vtl Software Ltd. All rights reserved.
+// </copyright>
+// <author> Dom Sinclair </author>
+// <date> 30 May 2023 </date>
+// <summary> Implements the log property attribute class </summary>
 
 using Metalama.Extensions.DependencyInjection;
 using Metalama.Framework.Aspects;
@@ -8,16 +11,13 @@ using Metalama.Framework.Code;
 
 namespace VtlSoftware.Logging
 {
-    ///---- LogPropertyAttribute   (Class) ----
-    ///
     /// <summary>
-    /// An attribute for logging properties.
+    /// An attribute that applies logging to a Property.
     /// </summary>
     ///
     /// <remarks></remarks>
     ///
     /// <seealso cref="T:OverrideFieldOrPropertyAspect"/>
-    ///-------------------------------------------------------------------------------------------------
 
 #pragma warning disable CS8618
     public class LogPropertyAttribute : OverrideFieldOrPropertyAspect
@@ -33,8 +33,6 @@ namespace VtlSoftware.Logging
         #endregion
 
         #region Public Methods
-        ///---- BuildAspect   (Method) ----
-        ///
         /// <summary>
         /// Builds an aspect.
         /// </summary>
@@ -44,7 +42,6 @@ namespace VtlSoftware.Logging
         /// <param name="builder">The builder.</param>
         ///
         /// <seealso cref="M:Metalama.Framework.Aspects.OverrideFieldOrPropertyAspect.BuildAspect(IAspectBuilder{IFieldOrProperty})"/>
-        ///-------------------------------------------------------------------------------------------------
 
         public override void BuildAspect(IAspectBuilder<IFieldOrProperty> builder)
         {
@@ -57,8 +54,6 @@ namespace VtlSoftware.Logging
         #endregion
 
         #region Public Properties
-        ///---- OverrideProperty   (Property) ----
-        ///
         /// <summary>
         /// Gets or sets the override property.
         /// </summary>
@@ -66,7 +61,6 @@ namespace VtlSoftware.Logging
         /// <value>The override property.</value>
         ///
         /// <seealso cref="P:Metalama.Framework.Aspects.OverrideFieldOrPropertyAspect.OverrideProperty"/>
-        ///-------------------------------------------------------------------------------------------------
 
         public override dynamic? OverrideProperty
         {
