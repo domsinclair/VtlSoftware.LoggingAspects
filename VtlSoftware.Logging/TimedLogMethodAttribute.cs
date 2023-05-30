@@ -21,9 +21,11 @@ namespace VtlSoftware.Logging
     ///
     /// <seealso cref="T:OverrideMethodAspect"/>
 
+    #pragma warning disable CS8618
     public class TimedLogMethodAttribute : OverrideMethodAspect
     {
         #region Fields
+
         /// <summary>
         /// (Immutable) The logger.
         /// </summary>

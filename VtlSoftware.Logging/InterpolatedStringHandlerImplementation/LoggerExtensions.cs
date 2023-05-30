@@ -1,35 +1,25 @@
-﻿
-///--------
-///
-// file:	VtlSoftware.Logging\LoggerExtensions.cs
-//
-// summary:	Implements the logger extensions class
-///-------------------------------------------------------------------------------------------------
+﻿// <copyright file="LoggerExtensions.cs" company="View To Learn / Vtl Software Ltd">
+// Copyright (c) 2023 View To Learn / Vtl Software Ltd. All rights reserved.
+// </copyright>
+// <author> Dom Sinclair </author>
+// <date> 30 May 2023 </date>
+// <summary> Implements the logger extensions class </summary>
 
 using System.Runtime.CompilerServices;
 
 namespace VtlSoftware.Logging
 {
-    ///---- LoggerExtensions   (Class) ----
-    ///
     /// <summary>
-    /// Logger extensions.
+    /// A logger extensions.
     /// </summary>
     ///
-    /// <remarks>
-    /// A set of extension methods for the main log levels provided by the ILogger interface in
-    /// Microsoft.Extensions.Logging
-    /// </remarks>
-    ///-------------------------------------------------------------------------------------------------
+    /// <remarks></remarks>
 
     public static partial class LoggerExtensions
     {
         #region Public Methods
-
-        ///---- Log   (Method) ----
-        ///
         /// <summary>
-        /// An ILogger extension method that logs the plain Log method.
+        /// An ILogger extension method that logs.
         /// </summary>
         ///
         /// <remarks></remarks>
@@ -37,7 +27,6 @@ namespace VtlSoftware.Logging
         /// <param name="logger">The logger to act on.</param>
         /// <param name="logLevel">The log level.</param>
         /// <param name="handler">[in,out] The handler.</param>
-        ///-------------------------------------------------------------------------------------------------
 
         public static void Log(
             this ILogger logger,

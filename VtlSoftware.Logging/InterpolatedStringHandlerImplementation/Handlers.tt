@@ -13,7 +13,7 @@ namespace VtlSoftware.Logging;
 <# foreach (var logLevel in logLevels) { #>
 
 [InterpolatedStringHandler]
-public ref struct VtlLogging<#= logLevel #>InterpolatedStringHandler
+public readonly ref struct  VtlLogging<#= logLevel #>InterpolatedStringHandler
 {
     private readonly VtlLoggingInterpolatedStringHandler handler;
 
