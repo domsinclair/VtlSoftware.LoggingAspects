@@ -80,6 +80,25 @@ namespace VtlSoftware.Logging
             .AddAspectIfEligible<LogMethodAttribute>();
         }
 
+
+        /// <summary>   An IProjectAmender extension method that logs an everything. </summary>
+        ///
+        /// <remarks>    </remarks>
+        ///
+        /// <param name="amender">  The amender to act on. </param>
+
+        public static void LogEverything(this IProjectAmender amender)
+        {
+            var types = amender.Outbound
+            .SelectMany(compilation => compilation.AllTypes)
+            .Where(type => !type.IsStatic);
+            types.SelectMany(type => type.Methods)
+                .Where(method => method.Name != "ToString")
+                .AddAspectIfEligible<LogMethodAttribute>();
+            types.SelectMany(type => type.Properties)
+                .AddAspectIfEligible<LogPropertyAttribute>();
+        }
+
         #endregion
     }
 }

@@ -23,7 +23,6 @@ namespace VtlSoftware.Logging
     public class LogPropertyAttribute : OverrideFieldOrPropertyAspect
     {
         #region Fields
-
         /// <summary>
         /// (Immutable) The logger.
         /// </summary>
@@ -45,7 +44,8 @@ namespace VtlSoftware.Logging
 
         public override void BuildAspect(IAspectBuilder<IFieldOrProperty> builder)
         {
-            if(!(builder.Target.Attributes.OfAttributeType(typeof(NoLogAttribute)).Any()))
+            if(!(builder.Target.Attributes.OfAttributeType(typeof(NoLogAttribute)).Any() ||
+                builder.Target.DeclaringType.Attributes.OfAttributeType(typeof(NoLogAttribute)).Any()))
             {
                 builder.Advice.Override(builder.Target, nameof(this.OverrideProperty));
             }

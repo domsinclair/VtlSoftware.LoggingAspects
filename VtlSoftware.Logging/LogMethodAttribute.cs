@@ -24,7 +24,6 @@ namespace VtlSoftware.Logging
     public class LogMethodAttribute : OverrideMethodAspect
     {
         #region Fields
-
         /// <summary>
         /// (Immutable) The logger.
         /// </summary>
@@ -47,7 +46,8 @@ namespace VtlSoftware.Logging
         public override void BuildAspect(IAspectBuilder<IMethod> builder)
         {
             if(!(builder.Target.Attributes.OfAttributeType(typeof(NoLogAttribute)).Any() ||
-                builder.Target.Attributes.OfAttributeType(typeof(TimedLogMethodAttribute)).Any()))
+                builder.Target.Attributes.OfAttributeType(typeof(TimedLogMethodAttribute)).Any() ||
+                builder.Target.DeclaringType.Attributes.OfAttributeType(typeof(NoLogAttribute)).Any()))
             {
                 builder.Advice.Override(builder.Target, nameof(this.OverrideMethod));
             }
