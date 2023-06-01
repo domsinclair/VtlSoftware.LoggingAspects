@@ -24,7 +24,6 @@ namespace VtlSoftware.Logging
     public class LogMethodAttribute : OverrideMethodAspect
     {
         #region Fields
-
         /// <summary>
         /// (Immutable) The logger.
         /// </summary>
