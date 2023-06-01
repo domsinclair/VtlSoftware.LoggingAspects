@@ -31,7 +31,7 @@ public static  class LoggerExtensions
 
     /// <summary>   An ILogger extension method that logs string messages only. </summary>
     ///
-    /// <remarks>    </remarks>
+    /// <remarks>  Thanks go to Gael Fraiteur for pointing out my error.  </remarks>
     ///
     /// <param name="logger">   The logger to act on. </param>
     /// <param name="logLevel"> The log level. </param>
