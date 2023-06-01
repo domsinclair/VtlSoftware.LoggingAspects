@@ -9,7 +9,7 @@
             var isTracingEnabled = this.logger.IsEnabled(global::Microsoft.Extensions.Logging.LogLevel.Trace);
             if (isTracingEnabled)
             {
-                global::VtlSoftware.Logging.LoggerExtensions.Log(logger, global::Microsoft.Extensions.Logging.LogLevel.Information,  ref "Entering VoidMethodTest.DoSomething");
+                global::VtlSoftware.Logging.LoggerExtensions.LogStringMessage(logger, global::Microsoft.Extensions.Logging.LogLevel.Information, "Entering VoidMethodTest.DoSomething.");
             }
             try
             {
@@ -17,7 +17,7 @@
                 object result = null;
                 if (isTracingEnabled)
                 {
-                    global::VtlSoftware.Logging.LoggerExtensions.Log(logger, global::Microsoft.Extensions.Logging.LogLevel.Information, ref  "Leaving VoidMethodTest.DoSomething.");
+                    global::VtlSoftware.Logging.LoggerExtensions.LogStringMessage(logger, global::Microsoft.Extensions.Logging.LogLevel.Information, "Leaving VoidMethodTest.DoSomething.");
                 }
                 return;
             }

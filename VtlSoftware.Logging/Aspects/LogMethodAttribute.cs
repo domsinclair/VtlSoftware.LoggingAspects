@@ -90,7 +90,7 @@ namespace VtlSoftware.Logging
             {
                 if(meta.Target.Parameters.Count == 0)
                 {
-                    logger.Log(LogLevel.Information, $"Entering {methodName}");
+                    logger.LogStringMessage(LogLevel.Information, $"Entering {methodName}.");
                 } else
                 {
                     Dictionary<string, object> parameters = new();
@@ -123,7 +123,7 @@ namespace VtlSoftware.Logging
 
                     if(meta.Target.Method.ReturnType.Is(typeof(void)))
                     {
-                        logger.Log(LogLevel.Information, $"Leaving {methodName}.");
+                        logger.LogStringMessage(LogLevel.Information, $"Leaving {methodName}.");
                     } else
                     {
                         if(SensitiveDataFilter.IsSensitive(meta.Target.Method.ReturnParameter))

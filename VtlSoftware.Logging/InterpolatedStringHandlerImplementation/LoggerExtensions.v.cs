@@ -29,6 +29,27 @@ public static  class LoggerExtensions
     }
 
 
+    /// <summary>   An ILogger extension method that logs string messages only. </summary>
+    ///
+    /// <remarks>    </remarks>
+    ///
+    /// <param name="logger">   The logger to act on. </param>
+    /// <param name="logLevel"> The log level. </param>
+    /// <param name="message">  The message to be logged. </param>
+
+    public static void LogStringMessage(
+        this ILogger logger,
+        LogLevel logLevel,
+        string message)
+    {
+       if (logger.IsEnabled(logLevel))
+       {
+           logger.Log(logLevel, message); 
+       }
+    
+    }
+
+
     
 
     /// <summary>   An ILogger extension method that logs a Trace level message. </summary> 

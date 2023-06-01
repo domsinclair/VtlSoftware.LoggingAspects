@@ -14,6 +14,7 @@
     <Compile Include="PropertyTest.t.cs" />
     <Compile Include="PropertyTest.t.cs" />
     <Compile Include="VoidMethodTest.t.cs" />
+    <Compile Include="VoidMethodTest.t.cs" />
   </ItemGroup>
 
   <ItemGroup>

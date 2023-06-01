@@ -3,7 +3,6 @@
     internal class VoidMethodTest
     {
         #region Private Methods
-
         [LogMethod]
         private void DoSomething()
         {
