@@ -25,7 +25,6 @@ namespace VtlSoftware.Logging
     public class TimedLogMethodAttribute : OverrideMethodAspect
     {
         #region Fields
-
         /// <summary>
         /// (Immutable) The logger.
         /// </summary>
@@ -91,7 +90,7 @@ namespace VtlSoftware.Logging
             {
                 if(meta.Target.Parameters.Count == 0)
                 {
-                    logger.LogInformation($"Entering {methodName}");
+                    logger.Log(LogLevel.Information, $"Entering {methodName}");
                 } else
                 {
                     Dictionary<string, object> parameters = new();
@@ -112,7 +111,7 @@ namespace VtlSoftware.Logging
                             parameters.Add(p.Name, " = <out>");
                         }
                     }
-                    logger.LogInformation($"Entering {methodName} with these parameters: {parameters}");
+                    logger.Log(LogLevel.Information, $"Entering {methodName} with these parameters: {parameters}");
                 }
             }
 
@@ -126,28 +125,31 @@ namespace VtlSoftware.Logging
 
                     if(meta.Target.Method.ReturnType.Is(typeof(void)))
                     {
-                        logger.LogInformation($"Leaving {methodName}.");
+                        logger.Log(LogLevel.Information, $"Leaving {methodName}.");
                     } else
                     {
                         if(SensitiveDataFilter.IsSensitive(meta.Target.Method.ReturnParameter))
                         {
-                            logger.LogInformation(
+                            logger.Log(
+                                LogLevel.Information,
                                 $"Leaving {methodName} with the following result which has been {redacted}");
                         } else
                         {
-                            logger.LogInformation($"Leaving {methodName} with the following result: {result}");
+                            logger.Log(
+                                LogLevel.Information,
+                                $"Leaving {methodName} with the following result: {result}");
                         }
                     }
                 }
                 return result;
             } catch(Exception e)
             {
-                logger.LogError($"An error has occured in {methodName}. These are the details: {e}");
+                logger.Log(LogLevel.Error, $"An error has occured in {methodName}. These are the details: {e}");
                 throw;
             } finally
             {
                 watch.Stop();
-                logger.LogInformation($"{methodName} took {watch.ElapsedMilliseconds} ms to complete.");
+                logger.Log(LogLevel.Information, $"{methodName} took {watch.ElapsedMilliseconds} ms to complete.");
             }
         }
 

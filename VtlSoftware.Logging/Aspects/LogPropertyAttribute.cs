@@ -23,6 +23,7 @@ namespace VtlSoftware.Logging
     public class LogPropertyAttribute : OverrideFieldOrPropertyAspect
     {
         #region Fields
+
         /// <summary>
         /// (Immutable) The logger.
         /// </summary>
@@ -69,7 +70,9 @@ namespace VtlSoftware.Logging
             {
                 var propertyName = $"{meta.Target.Type.ToDisplayString(CodeDisplayFormat.MinimallyQualified)}.{meta.Target.Property.Name}";
                 meta.Proceed();
-                logger.LogInformation($"The value of {propertyName} was set to: {meta.Target.Property.Value}");
+                logger.Log(
+                    LogLevel.Information,
+                    $"The value of {propertyName} was set to: {meta.Target.Property.Value}");
             }
         }
 
