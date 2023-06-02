@@ -22,6 +22,7 @@ namespace VtlSoftware.Logging
     public class LoggingOptions : ProjectExtension
     {
         #region Fields
+
         /// <summary>
         /// Information describing the sensitive.
         /// </summary>

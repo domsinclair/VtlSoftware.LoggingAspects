@@ -23,7 +23,6 @@ namespace VtlSoftware.Logging
     public class LogPropertyAttribute : OverrideFieldOrPropertyAspect
     {
         #region Fields
-
         /// <summary>
         /// (Immutable) The logger.
         /// </summary>
