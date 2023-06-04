@@ -1,6 +1,6 @@
 ﻿namespace VtlSoftware.Logging.Tests
 {
-    internal class MethodWithParamsTest
+    public class MethodWithParamsTest
     {
         #region Private Methods
 

@@ -10,9 +10,14 @@
 
   <ItemGroup>
     <Compile Include="MethodTest.t.cs" />
+    <Compile Include="MethodWithParamsTest.t.cs" />
+    <Compile Include="MethodWithParamsTest.t.cs" />
     <Compile Include="MethodWitParamsTest.t.cs" />
     <Compile Include="PropertyTest.t.cs" />
     <Compile Include="PropertyTest.t.cs" />
+    <Compile Include="TimedMethodWithParamsTest.t.cs" />
+    <Compile Include="TimedVoidMethodTest.t.cs" />
+    <Compile Include="VoidMethodTest.t.cs" />
     <Compile Include="VoidMethodTest.t.cs" />
     <Compile Include="VoidMethodTest.t.cs" />
   </ItemGroup>

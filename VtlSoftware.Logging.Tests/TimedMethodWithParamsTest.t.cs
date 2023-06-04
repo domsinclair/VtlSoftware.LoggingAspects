@@ -1,8 +1,13 @@
-﻿namespace VtlSoftware.Logging.Tests
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+namespace VtlSoftware.Logging.Tests
 {
-    public class MethodWithParamsTest
+    public class TimedMethodWithParamsTest
     {
-        [LogMethod]
+        [TimedLogMethod]
         private string ChangeString(string stringToChange)
         {
             const string redacted = "<Redacted>";
@@ -15,10 +20,11 @@
                     {
                         global::System.Collections.Generic.Dictionary<global::System.String, global::System.Object> parameters = new();
                         parameters.Add("Type = string: Parameter Name = stringToChange", stringToChange);
-                        global::VtlSoftware.Logging.LoggerExtensions.Log(logger, global::Microsoft.Extensions.Logging.LogLevel.Information, $"Entering MethodWithParamsTest.ChangeString with these parameters: {parameters}");
+                        global::VtlSoftware.Logging.LoggerExtensions.Log(logger, global::Microsoft.Extensions.Logging.LogLevel.Information, $"Entering TimedMethodWithParamsTest.ChangeString with these parameters: {parameters}");
                     }
                 }
             }
+            global::System.Diagnostics.Stopwatch watch = global::System.Diagnostics.Stopwatch.StartNew();
             try
             {
                 global::System.String result;
@@ -29,7 +35,7 @@
                     {
                         if (guard_1.CanLog)
                         {
-                            global::VtlSoftware.Logging.LoggerExtensions.Log(logger, global::Microsoft.Extensions.Logging.LogLevel.Information, $"Leaving MethodWithParamsTest.ChangeString with the following result: {result}");
+                            global::VtlSoftware.Logging.LoggerExtensions.Log(logger, global::Microsoft.Extensions.Logging.LogLevel.Information, $"Leaving TimedMethodWithParamsTest.ChangeString with the following result: {result}");
                         }
                     }
                 }
@@ -41,14 +47,25 @@
                 {
                     if (guard_2.CanLog)
                     {
-                        global::VtlSoftware.Logging.LoggerExtensions.Log(logger, global::Microsoft.Extensions.Logging.LogLevel.Error, $"An error has occured in MethodWithParamsTest.ChangeString. These are the details: {e}");
+                        global::VtlSoftware.Logging.LoggerExtensions.Log(logger, global::Microsoft.Extensions.Logging.LogLevel.Error, $"An error has occured in TimedMethodWithParamsTest.ChangeString. These are the details: {e}");
                     }
                 }
                 throw;
             }
+            finally
+            {
+                watch.Stop();
+                using (var guard_3 = global::VtlSoftware.Logging.LogRecursionGuard.Begin())
+                {
+                    if (guard_3.CanLog)
+                    {
+                        global::VtlSoftware.Logging.LoggerExtensions.Log(logger, global::Microsoft.Extensions.Logging.LogLevel.Information, $"TimedMethodWithParamsTest.ChangeString took {watch.ElapsedMilliseconds} ms to complete.");
+                    }
+                }
+            }
         }
         private global::Microsoft.Extensions.Logging.ILogger logger;
-        public MethodWithParamsTest(global::Microsoft.Extensions.Logging.ILogger<global::VtlSoftware.Logging.Tests.MethodWithParamsTest> logger = default(global::Microsoft.Extensions.Logging.ILogger<global::VtlSoftware.Logging.Tests.MethodWithParamsTest>))
+        public TimedMethodWithParamsTest(global::Microsoft.Extensions.Logging.ILogger<global::VtlSoftware.Logging.Tests.TimedMethodWithParamsTest> logger = default(global::Microsoft.Extensions.Logging.ILogger<global::VtlSoftware.Logging.Tests.TimedMethodWithParamsTest>))
         {
             this.logger = logger ?? throw new System.ArgumentNullException(nameof(logger));
         }

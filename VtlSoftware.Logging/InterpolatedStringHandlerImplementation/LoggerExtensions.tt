@@ -38,15 +38,17 @@ public static  class LoggerExtensions
     }
 
 
-    /// <summary>   An ILogger extension method that logs string messages only. </summary>
+    /// <summary>   An ILogger extension method that logs strings only. </summary>
     ///
-    /// <remarks>  Thanks go to Gael Fraiteur for pointing out my error.  </remarks>
-    ///
+    /// <remarks>  Should be used instead of .Log when the message to be 
+    ///            is nothing more than a string and will not require 
+    ///            destructuring for the purposes of structured logs.</remarks>
+    /// 
     /// <param name="logger">   The logger to act on. </param>
     /// <param name="logLevel"> The log level. </param>
     /// <param name="message">  The message to be logged. </param>
 
-    public static void LogStringMessage(
+    public static void LogString(
         this ILogger logger,
         LogLevel logLevel,
         string message)

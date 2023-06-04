@@ -20,7 +20,8 @@ namespace VtlSoftware.Logging
     ///
     /// <seealso cref="T:OverrideMethodAspect"/>
 
-    #pragma warning disable CS8618
+#pragma warning disable CS8618
+#pragma warning disable IDE0063
     public class LogMethodAttribute : OverrideMethodAspect
     {
         #region Fields
@@ -79,40 +80,48 @@ namespace VtlSoftware.Logging
         public override dynamic? OverrideMethod()
         {
             var methodName = $"{meta.Target.Type.ToDisplayString(CodeDisplayFormat.MinimallyQualified)}.{meta.Target.Method.Name}";
-
-            string redacted = "Redacted";
+            int paramCount = meta.Target.Parameters.Count;
+            const string redacted = "<Redacted>";
 
             //add a check to see if we do actually want to do any logging at all
             var isTracingEnabled = this.logger.IsEnabled(LogLevel.Trace);
 
-            //now we want to add an entry message.
-
             if(isTracingEnabled)
             {
-                if(meta.Target.Parameters.Count == 0)
+                //add the entry message
+
+                using(var guard = LogRecursionGuard.Begin())
                 {
-                    logger.LogStringMessage(LogLevel.Information, $"Entering {methodName}.");
-                } else
-                {
-                    Dictionary<string, object> parameters = new();
-                    foreach(var p in meta.Target.Parameters)
+                    if(guard.CanLog)
                     {
-                        if(p.RefKind != RefKind.Out)
+                        if(paramCount == 0)
                         {
-                            if(SensitiveDataFilter.IsSensitive(p))
-                            {
-                                parameters.Add($"Type = {p.Type}: Parameter Name ={p.Name}", redacted);
-                            } else
-                            {
-                                parameters.Add($"Type = {p.Type}: Parameter Name = {p.Name}", p.Value);
-                            }
+                            logger.LogString(LogLevel.Information, $"Entering {methodName}.");
                         } else
                         {
-                            //Metalame can't serialise an out parameter but it would help if we know it's there.
-                            parameters.Add(p.Name, " = <out>");
+                            Dictionary<string, object> parameters = new();
+                            foreach(var p in meta.Target.Parameters)
+                            {
+                                if(p.RefKind != RefKind.Out)
+                                {
+                                    if(SensitiveDataFilter.IsSensitive(p))
+                                    {
+                                        parameters.Add($"Type = {p.Type}: Parameter Name ={p.Name}", redacted);
+                                    } else
+                                    {
+                                        parameters.Add($"Type = {p.Type}: Parameter Name = {p.Name}", p.Value);
+                                    }
+                                } else
+                                {
+                                    //Metalame can't serialise an out parameter but it would help if we know it's there.
+                                    parameters.Add(p.Name, " = <out>");
+                                }
+                            }
+                            logger.Log(
+                                LogLevel.Information,
+                                $"Entering {methodName} with these parameters: {parameters}");
                         }
                     }
-                    logger.Log(LogLevel.Information, $"Entering {methodName} with these parameters: {parameters}");
                 }
             }
             try
@@ -120,30 +129,43 @@ namespace VtlSoftware.Logging
                 var result = meta.Proceed();
                 if(isTracingEnabled)
                 {
-                    // Display the success message. The message is different when the method is void.
+                    // Display the success message which will be different when the method is void.
+                    bool isVoid = meta.Target.Method.ReturnType.Is(typeof(void));
 
-                    if(meta.Target.Method.ReturnType.Is(typeof(void)))
+                    using(var guard = LogRecursionGuard.Begin())
                     {
-                        logger.LogStringMessage(LogLevel.Information, $"Leaving {methodName}.");
-                    } else
-                    {
-                        if(SensitiveDataFilter.IsSensitive(meta.Target.Method.ReturnParameter))
+                        if(guard.CanLog)
                         {
-                            logger.Log(
-                                LogLevel.Information,
-                                $"Leaving {methodName} with the following result which has been {redacted}");
-                        } else
-                        {
-                            logger.Log(
-                                LogLevel.Information,
-                                $"Leaving {methodName} with the following result: {result}");
+                            if(isVoid)
+                            {
+                                logger.LogString(LogLevel.Information, $"Leaving {methodName}.");
+                            } else
+                            {
+                                if(SensitiveDataFilter.IsSensitive(meta.Target.Method.ReturnParameter))
+                                {
+                                    logger.Log(
+                                        LogLevel.Information,
+                                        $"Leaving {methodName} with the following result which has been {redacted}");
+                                } else
+                                {
+                                    logger.Log(
+                                        LogLevel.Information,
+                                        $"Leaving {methodName} with the following result: {result}");
+                                }
+                            }
                         }
                     }
                 }
                 return result;
-            } catch(Exception e)
+            } catch(Exception e) when (this.logger.IsEnabled(LogLevel.Warning))
             {
-                logger.Log(LogLevel.Error, $"An error has occured in {methodName}. These are the details: {e}");
+                using(var guard = LogRecursionGuard.Begin())
+                {
+                    if(guard.CanLog)
+                    {
+                        logger.Log(LogLevel.Error, $"An error has occured in {methodName}. These are the details: {e}");
+                    }
+                }
                 throw;
             }
         }

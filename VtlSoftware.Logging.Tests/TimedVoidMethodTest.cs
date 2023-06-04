@@ -1,17 +1,10 @@
 ﻿namespace VtlSoftware.Logging.Tests
 {
-    public class VoidMethodTest
+    public class TimedVoidMethodTest
     {
-        #region Constructors
-
-        public VoidMethodTest()
-        {
-        }
-
-        #endregion
-
         #region Public Methods
-        [LogMethod]
+
+        [TimedLogMethod]
         public void DoSomethingh()
         {
         }
