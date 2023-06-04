@@ -22,10 +22,12 @@ namespace VtlSoftware.Logging
     {
         #region Public Methods
         /// <summary>
-        /// An IProjectAmender extension method that logs all methods.
+        /// An IProjectAmender extension method that logs all methods, by applying the [LogMethod] attribute.
         /// </summary>
         ///
-        /// <remarks></remarks>
+        /// <remarks>
+        /// Static classes will be ignored aa will those marked with the [NoLog] attribute.
+        /// </remarks>
         ///
         /// <param name="amender">The amender to act on.</param>
 
@@ -33,17 +35,20 @@ namespace VtlSoftware.Logging
         {
             amender.Outbound
             .SelectMany(compilation => compilation.AllTypes)
-            .Where(type => !type.IsStatic)
+            .Where(type => !type.IsStatic || type.Attributes.OfAttributeType(typeof(NoLogAttribute)).Any())
             .SelectMany(type => type.Methods)
             .Where(method => method.Name != "ToString")
             .AddAspectIfEligible<LogMethodAttribute>();
         }
 
         /// <summary>
-        /// An IProjectAmender extension method that logs all public and private methods.
+        /// An IProjectAmender extension method that logs all public and private methods, by applying the [LogMethod]
+        /// attribute.
         /// </summary>
         ///
-        /// <remarks></remarks>
+        /// <remarks>
+        /// Static classes will be ignored aa will those marked with the [NoLog] attribute.
+        /// </remarks>
         ///
         /// <param name="amender">The amender to act on.</param>
 
@@ -51,7 +56,10 @@ namespace VtlSoftware.Logging
         {
             amender.Outbound
             .SelectMany(compilation => compilation.AllTypes)
-            .Where(type => type.Accessibility is Accessibility.Public or Accessibility.Internal && !type.IsStatic)
+            .Where(
+                type => type.Accessibility is Accessibility.Public or Accessibility.Internal &&
+                    !type.IsStatic ||
+                    type.Attributes.OfAttributeType(typeof(NoLogAttribute)).Any())
             .SelectMany(type => type.Methods)
             .Where(
                 method => method.Accessibility is Accessibility.Public or Accessibility.Private &&
@@ -60,10 +68,12 @@ namespace VtlSoftware.Logging
         }
 
         /// <summary>
-        /// An IProjectAmender extension method that logs all public methods.
+        /// An IProjectAmender extension method that logs all public methods, by applying the [LogMethod] attribute.
         /// </summary>
         ///
-        /// <remarks></remarks>
+        /// <remarks>
+        /// Static classes will be ignored, as will those marked with the [NoLog] attribute.
+        /// </remarks>
         ///
         /// <param name="amender">The amender to act on.</param>
 
@@ -80,12 +90,85 @@ namespace VtlSoftware.Logging
             .AddAspectIfEligible<LogMethodAttribute>();
         }
 
+        /// <summary>
+        /// An IProjectAmender extension method that logs and times all methods, by applyining the [TimedLogMethod]
+        /// attribute.
+        /// </summary>
+        ///
+        /// <remarks>
+        /// Static classes will be ignored aa will those marked with the [NoLog] attribute.
+        /// </remarks>
+        ///
+        /// <param name="amender">The amender to act on.</param>
 
-        /// <summary>   An IProjectAmender extension method that logs an everything. </summary>
+        public static void LogAndTimeAllMethods(this IProjectAmender amender)
+        {
+            amender.Outbound
+            .SelectMany(compilation => compilation.AllTypes)
+            .Where(type => !type.IsStatic || type.Attributes.OfAttributeType(typeof(NoLogAttribute)).Any())
+            .SelectMany(type => type.Methods)
+            .Where(method => method.Name != "ToString")
+            .AddAspectIfEligible<TimedLogMethodAttribute>();
+        }
+
+        /// <summary>
+        /// An IProjectAmender extension method that logs and time all public and private methods, by applying the
+        /// [TimedLogMethod] attribute.
+        /// </summary>
         ///
-        /// <remarks>    </remarks>
+        /// <remarks>
+        /// Static classes will be ignored aa will those marked with the  [NoLog] attribute.
+        /// </remarks>
         ///
-        /// <param name="amender">  The amender to act on. </param>
+        /// <param name="amender">The amender to act on.</param>
+
+        public static void LogAndTimeAllPublicAndPrivateMethods(this  IProjectAmender amender)
+        {
+            amender.Outbound
+            .SelectMany(compilation => compilation.AllTypes)
+            .Where(
+                type => type.Accessibility is Accessibility.Public or Accessibility.Internal &&
+                    !type.IsStatic ||
+                    type.Attributes.OfAttributeType(typeof(NoLogAttribute)).Any())
+            .SelectMany(type => type.Methods)
+            .Where(
+                method => method.Accessibility is Accessibility.Public or Accessibility.Private &&
+                    method.Name != "ToString")
+            .AddAspectIfEligible<TimedLogMethodAttribute>();
+        }
+
+        /// <summary>
+        /// An IProjectAmender extension method that logs and times all public methods, by applying the [TimedLogMethod]
+        /// attribute.
+        /// </summary>
+        ///
+        /// <remarks>
+        /// Static classes will be ignored, as will those marked with the [NoLog] attribute.
+        /// </remarks>
+        ///
+        /// <param name="amender">The amender to act on.</param>
+
+        public static void LogAndTimeAllPublicMethods(this  IProjectAmender amender)
+        {
+            amender.Outbound
+           .SelectMany(compilation => compilation.AllTypes)
+           .Where(
+               type => type.Accessibility is Accessibility.Public or Accessibility.Internal &&
+                   !type.IsStatic ||
+                   type.Attributes.OfAttributeType(typeof(NoLogAttribute)).Any())
+           .SelectMany(type => type.Methods)
+           .Where(method => method.Accessibility is Accessibility.Public && method.Name != "ToString")
+           .AddAspectIfEligible<TimedLogMethodAttribute>();
+        }
+
+        /// <summary>
+        /// An IProjectAmender extension method that logs an everything, by applying the [LogMethod] attribute to
+        /// methods and the  [LogProperty] attribute to properties.
+        /// </summary>
+        ///
+        /// <remarks>Static classes will be ignored.</remarks>
+        ///
+        /// <param name="amender">The amender to act on.</param>
 
         public static void LogEverything(this IProjectAmender amender)
         {
