@@ -12,8 +12,11 @@
             }
             set
             {
+                var oldPropValue = this.FirstName_Source;
                 this.FirstName_Source = value;
-                global::VtlSoftware.Logging.LoggerExtensions.Log(logger, global::Microsoft.Extensions.Logging.LogLevel.Information, $"The value of PropertyTest.FirstName was set to: {this.FirstName_Source}");
+                var newPropValue = this.FirstName_Source;
+                global::VtlSoftware.Logging.LoggerExtensions.Log(logger, global::Microsoft.Extensions.Logging.LogLevel.Information, $"The old value of PropertyTest.FirstName was: string = {oldPropValue}");
+                global::VtlSoftware.Logging.LoggerExtensions.Log(logger, global::Microsoft.Extensions.Logging.LogLevel.Information, $"The new value of PropertyTest.FirstName is: string = {newPropValue}");
             }
         }
         private string FirstName_Source { get => firstName; set => firstName = value; }
