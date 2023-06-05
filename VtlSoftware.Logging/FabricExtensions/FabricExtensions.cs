@@ -26,7 +26,7 @@ namespace VtlSoftware.Logging
         /// </summary>
         ///
         /// <remarks>
-        /// Static classes will be ignored aa will those marked with the [NoLog] attribute.
+        /// Static classes will be ignored as will those marked with the [NoLog] attribute.
         /// </remarks>
         ///
         /// <param name="amender">The amender to act on.</param>
@@ -42,12 +42,29 @@ namespace VtlSoftware.Logging
         }
 
         /// <summary>
+        /// An IProjectAmender extension method that logs all properties.
+        /// </summary>
+        ///
+        /// <remarks>Static classes will be ignored.</remarks>
+        ///
+        /// <param name="amender">The amender to act on.</param>
+
+        public static void LogAllProperties(this IProjectAmender amender)
+        {
+            amender.Outbound
+            .SelectMany(compilation => compilation.AllTypes)
+            .Where(type => !type.IsStatic)
+            .SelectMany(type => type.Properties)
+             .AddAspectIfEligible<LogPropertyAttribute>();
+        }
+
+        /// <summary>
         /// An IProjectAmender extension method that logs all public and private methods, by applying the [LogMethod]
         /// attribute.
         /// </summary>
         ///
         /// <remarks>
-        /// Static classes will be ignored aa will those marked with the [NoLog] attribute.
+        /// Static classes will be ignored, as will those marked with the [NoLog] attribute.
         /// </remarks>
         ///
         /// <param name="amender">The amender to act on.</param>
@@ -96,7 +113,7 @@ namespace VtlSoftware.Logging
         /// </summary>
         ///
         /// <remarks>
-        /// Static classes will be ignored aa will those marked with the [NoLog] attribute.
+        /// Static classes will be ignored, as will those marked with the [NoLog] attribute.
         /// </remarks>
         ///
         /// <param name="amender">The amender to act on.</param>
@@ -117,7 +134,7 @@ namespace VtlSoftware.Logging
         /// </summary>
         ///
         /// <remarks>
-        /// Static classes will be ignored aa will those marked with the  [NoLog] attribute.
+        /// Static classes will be ignored, as will those marked with the  [NoLog] attribute.
         /// </remarks>
         ///
         /// <param name="amender">The amender to act on.</param>

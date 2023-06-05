@@ -9,6 +9,9 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Include="DoNotLogAllPublicMethodsInNoLogClassTest.t.cs" />
+    <Compile Include="LogAllPublicMethodsTest1.t.cs" />
+    <Compile Include="LoggingPublicNonStaticMethodsOnlyTest.t.cs" />
     <Compile Include="MethodTest.t.cs" />
     <Compile Include="MethodWithParamsTest.t.cs" />
     <Compile Include="MethodWithParamsTest.t.cs" />
