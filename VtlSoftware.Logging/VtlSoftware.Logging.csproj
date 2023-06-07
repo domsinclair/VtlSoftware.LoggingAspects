@@ -6,6 +6,20 @@
     <Nullable>enable</Nullable>
 	<LangVersion>10.0</LangVersion>
 	<GenerateDocumentationFile>true</GenerateDocumentationFile>
+	<GeneratePackageOnBuild>True</GeneratePackageOnBuild>
+	<Title>Vtl Software Logging</Title>
+	<Version>2023.1.5-preview</Version>
+	<Authors>Dom Sinclair</Authors>
+	<Company>Vtl Software Ltd</Company>
+	<Description>A collection of Logging Aspects created with Metalama that will allow you to easily add logging to a project.</Description>
+	<Copyright>© 2023</Copyright>
+	<RepositoryUrl>https://github.com/domsinclair/VtlSoftware.LoggingAspects</RepositoryUrl>
+	<RepositoryType>git</RepositoryType>
+	<PackageTags>VtlSoftware,Logging,Metalama</PackageTags>
+	<PackageLicenseExpression>MIT</PackageLicenseExpression>
+	<PackageReadmeFile>ReadMe.md</PackageReadmeFile>
+	<PackageReleaseNotes>Initial preview release</PackageReleaseNotes>
+	<PackageIcon>logs@128px.png</PackageIcon>
   </PropertyGroup>
 
   <ItemGroup>
@@ -22,6 +36,14 @@
     <None Update="InterpolatedStringHandlerImplementation\LoggerExtensions.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
       <LastGenOutput>LoggerExtensions.v.cs</LastGenOutput>
+    </None>
+    <None Update="logs%40128px.png">
+      <Pack>True</Pack>
+      <PackagePath>\</PackagePath>
+    </None>
+    <None Update="ReadMe.md">
+      <Pack>True</Pack>
+      <PackagePath>\</PackagePath>
     </None>
   </ItemGroup>
 

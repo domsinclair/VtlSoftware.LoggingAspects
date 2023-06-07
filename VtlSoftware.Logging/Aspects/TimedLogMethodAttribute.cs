@@ -48,7 +48,8 @@ namespace VtlSoftware.Logging
         public override void BuildAspect(IAspectBuilder<IMethod> builder)
         {
             if(!(builder.Target.Attributes.OfAttributeType(typeof(NoLogAttribute)).Any() ||
-                builder.Target.Attributes.OfAttributeType(typeof(LogMethodAttribute)).Any()))
+                    builder.Target.Attributes.OfAttributeType(typeof(LogMethodAttribute)).Any()) ||
+                builder.Target.DeclaringType.Attributes.OfAttributeType(typeof(NoLogAttribute)).Any())
             {
                 builder.Advice.Override(builder.Target, nameof(this.OverrideMethod));
             }
@@ -64,7 +65,11 @@ namespace VtlSoftware.Logging
         ///
         /// <seealso cref="M:Metalama.Framework.Aspects.MethodAspect.BuildEligibility(IEligibilityBuilder{IMethod})"/>
 
-        public override void BuildEligibility(IEligibilityBuilder<IMethod> builder) { base.BuildEligibility(builder); }
+        public override void BuildEligibility(IEligibilityBuilder<IMethod> builder)
+        {
+            base.BuildEligibility(builder);
+            builder.MustNotBeStatic();
+        }
 
         /// <summary>
         /// Default template of the new method implementation.

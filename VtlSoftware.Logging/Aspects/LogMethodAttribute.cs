@@ -25,7 +25,6 @@ namespace VtlSoftware.Logging
     public class LogMethodAttribute : OverrideMethodAspect
     {
         #region Fields
-
         /// <summary>
         /// (Immutable) The logger.
         /// </summary>
@@ -65,7 +64,11 @@ namespace VtlSoftware.Logging
         ///
         /// <seealso cref="M:Metalama.Framework.Aspects.MethodAspect.BuildEligibility(IEligibilityBuilder{IMethod})"/>
 
-        public override void BuildEligibility(IEligibilityBuilder<IMethod> builder) { base.BuildEligibility(builder); }
+        public override void BuildEligibility(IEligibilityBuilder<IMethod> builder)
+        {
+            base.BuildEligibility(builder);
+            builder.MustNotBeStatic();
+        }
 
         /// <summary>
         /// Default template of the new method implementation.
