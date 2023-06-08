@@ -21,6 +21,7 @@ namespace VtlSoftware.Logging
     public static  class FabricExtensions
     {
         #region Public Methods
+
         /// <summary>
         /// An IProjectAmender extension method that logs all methods, by applying the [LogMethod] attribute.
         /// </summary>
@@ -195,6 +196,26 @@ namespace VtlSoftware.Logging
             types.SelectMany(type => type.Methods)
                 .Where(method => method.Name != "ToString")
                 .AddAspectIfEligible<LogMethodAttribute>();
+            types.SelectMany(type => type.Properties)
+                .AddAspectIfEligible<LogPropertyAttribute>();
+        }
+
+        /// <summary>
+        /// An IProjectAmender extension method that Times every method and logs every property.
+        /// </summary>
+        ///
+        /// <remarks>Static classes will be ignored.</remarks>
+        ///
+        /// <param name="amender">The amender to act on.</param>
+
+        public static void TimeEveryMethodLogEveryProperty(this IProjectAmender amender)
+        {
+            var types = amender.Outbound
+            .SelectMany(compilation => compilation.AllTypes)
+            .Where(type => !type.IsStatic);
+            types.SelectMany(type => type.Methods)
+                .Where(method => method.Name != "ToString")
+                .AddAspectIfEligible<TimedLogMethodAttribute>();
             types.SelectMany(type => type.Properties)
                 .AddAspectIfEligible<LogPropertyAttribute>();
         }

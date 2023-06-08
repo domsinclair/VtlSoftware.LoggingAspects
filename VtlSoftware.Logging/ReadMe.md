@@ -53,6 +53,20 @@ When applied to a Class, Method or Property no logging of that entity will occur
 A number of extion methods to provide Fabrics that will automate the process of adding logging attributes to your code base are also provided.  You can find more details on how to use those in the help file.
 
 
+Current provided extensions are.
+
+#### LogAllMethods
+
+Applies the [LogMethod} attribute to all eligible methods.
+
+#### LogAndTimeAllMethods
+
+Applies the [TimedLogMethod] attribute to all eligible methods.
+
+#### LogAllPublicAndPrivateMethods
+
+
+
 ## Help and Support
 
 A comprehensive help file can be found [here](https://vtlsoftware.co.uk/aspectdocs/webframe.html).

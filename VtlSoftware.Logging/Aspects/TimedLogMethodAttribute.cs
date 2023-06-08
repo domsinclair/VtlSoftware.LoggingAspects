@@ -26,6 +26,7 @@ namespace VtlSoftware.Logging
     public class TimedLogMethodAttribute : OverrideMethodAspect
     {
         #region Fields
+
         /// <summary>
         /// (Immutable) The logger.
         /// </summary>
@@ -69,6 +70,7 @@ namespace VtlSoftware.Logging
         {
             base.BuildEligibility(builder);
             builder.MustNotBeStatic();
+            builder.MustNotHaveAspectOfType(typeof(LogMethodAttribute));
         }
 
         /// <summary>

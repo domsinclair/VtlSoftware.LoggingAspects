@@ -8,7 +8,7 @@
 	<GenerateDocumentationFile>true</GenerateDocumentationFile>
 	<GeneratePackageOnBuild>True</GeneratePackageOnBuild>
 	<Title>Vtl Software Logging</Title>
-	<Version>2023.1.5-preview</Version>
+	<Version>2023.1.5.1-preview</Version>
 	<Authors>Dom Sinclair</Authors>
 	<Company>Vtl Software Ltd</Company>
 	<Description>A collection of Logging Aspects created with Metalama that will allow you to easily add logging to a project.</Description>
@@ -18,7 +18,9 @@
 	<PackageTags>VtlSoftware,Logging,Metalama</PackageTags>
 	<PackageLicenseExpression>MIT</PackageLicenseExpression>
 	<PackageReadmeFile>ReadMe.md</PackageReadmeFile>
-	<PackageReleaseNotes>Initial preview release</PackageReleaseNotes>
+	<PackageReleaseNotes>2023.1.5.1:
+
+Added another Fabric extension.</PackageReleaseNotes>
 	<PackageIcon>logs@128px.png</PackageIcon>
   </PropertyGroup>
 
