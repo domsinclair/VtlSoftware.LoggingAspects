@@ -21,7 +21,6 @@ namespace VtlSoftware.Logging
     public static  class FabricExtensions
     {
         #region Public Methods
-
         /// <summary>
         /// An IProjectAmender extension method that logs all methods, by applying the [LogMethod] attribute.
         /// </summary>
@@ -208,7 +207,7 @@ namespace VtlSoftware.Logging
         ///
         /// <param name="amender">The amender to act on.</param>
 
-        public static void TimeEveryMethodLogEveryProperty(this IProjectAmender amender)
+        public static void TimeEveryMethodAndLogEveryProperty(this IProjectAmender amender)
         {
             var types = amender.Outbound
             .SelectMany(compilation => compilation.AllTypes)

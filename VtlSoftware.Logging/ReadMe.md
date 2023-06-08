@@ -57,14 +57,35 @@ Current provided extensions are.
 
 #### LogAllMethods
 
-Applies the [LogMethod} attribute to all eligible methods.
+Applies the ```[LogMethod]``` attribute to all eligible methods.
 
 #### LogAndTimeAllMethods
 
-Applies the [TimedLogMethod] attribute to all eligible methods.
+Applies the ```[TimedLogMethod]``` attribute to all eligible methods.
+
+#### LogAllPublicMethods
+
+Applies the ```[LogMethod]``` attribute to all public methods.
+
+#### LogAndTimeAllPublicMethods
+
+Applies the ```[TimedLogMethod]``` attribute to all public methods.
 
 #### LogAllPublicAndPrivateMethods
 
+Applies the ```[LogMethod]``` attribute to all public and Private Methods.
+
+#### LogAndTimeAllPublicAndPrivateMethods
+
+Applies the ```[TimedLogMethod]``` attribute to all public and Private Methods.
+
+#### LogEverything
+
+Applies the ```[LogMethod]``` attribute to all methods and the ```[LogProperty]``` attribute to all properties.
+
+#### TimeEveryMethodAndLogEveryProperty
+
+Applies the ```[TimedLogMethod]``` attribute to all methods and the ```[LogProperty]``` attribute to all properties.
 
 
 ## Help and Support
